@@ -1,5 +1,11 @@
 import React, { useEffect } from "react";
-import { TouchableOpacity, StyleSheet, View, Text } from "react-native";
+import {
+  TouchableOpacity,
+  StyleSheet,
+  View,
+  Text,
+  ActivityIndicator,
+} from "react-native";
 import { connect } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
 import Actions from "./actions";
@@ -38,10 +44,14 @@ export const Home = React.memo(
     return (
       <View style={styles.container}>
         <View style={styles.topBar}>
-          <View style={styles.column}>
-            <Text style={styles.h1}>{user.name}</Text>
-            <Text style={styles.s1}>{user.website}</Text>
-          </View>
+          {nav.loading ? (
+            <ActivityIndicator />
+          ) : (
+            <View style={styles.column}>
+              <Text style={styles.h1}>{user.name}</Text>
+              <Text style={styles.s1}>{user.website}</Text>
+            </View>
+          )}
           <View style={styles.column}>
             <View style={styles.row}>
               <TouchableOpacity onPress={prev}>
