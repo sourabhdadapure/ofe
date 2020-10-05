@@ -6,23 +6,30 @@ import Actions from "./actions";
 import Selectors from "./selectors";
 import { State, User } from "./types";
 import theme from "./theme";
+import { NavigationInfo } from "./modules/nav/types";
 
 interface HomeProps {
   users: User[];
   fetchUsers: () => void;
+  nav: NavigationInfo;
+  navigate: (navigationIndex: number) => void;
 }
 
 export const Home = React.memo(
-  ({ users, fetchUsers }: HomeProps): React.ReactElement => {
+  ({ users, fetchUsers, nav, navigate }: HomeProps): React.ReactElement => {
     useEffect(() => {
       fetchUsers();
     }, []);
 
     const userToShow = 2;
-    const user = users[userToShow];
+    const user = users[nav.currentScreen];
 
-    const next = () => {};
-    const prev = () => {};
+    const next = () => {
+      navigate(1);
+    };
+    const prev = () => {
+      navigate(-1);
+    };
 
     if (!users.length) {
       return null;
@@ -64,9 +71,11 @@ export const Home = React.memo(
 export default connect(
   (state: State) => ({
     users: Selectors.userData(state),
+    nav: state.nav,
   }),
   (dispatch) => ({
     fetchUsers: () => dispatch(Actions.users.fetchUsers.trigger()),
+    navigate: () => {},
   })
 )(Home);
 
