@@ -1,3 +1,6 @@
+import { NavigationInfo } from "./modules/nav/types";
+import { userPost } from "./modules/posts/types";
+
 export type Action = (
   payload?: any
 ) => ActionObject & {
@@ -30,4 +33,6 @@ export type UserState = {
 
 export type State = {
   users: UserState;
+  nav: NavigationInfo;
+  posts: userPost[];
 };
