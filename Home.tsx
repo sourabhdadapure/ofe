@@ -13,12 +13,15 @@ import Selectors from "./selectors";
 import { State, User } from "./types";
 import theme from "./theme";
 import { NavigationInfo } from "./modules/nav/types";
+import { userPost } from "./modules/posts/types";
 
 interface HomeProps {
   users: User[];
   fetchUsers: () => void;
   nav: NavigationInfo;
   navigate: (navigationIndex: number) => void;
+  posts: userPost[];
+  getPosts: (userIndex: number) => void;
 }
 
 export const Home = React.memo(
@@ -82,10 +85,12 @@ export default connect(
   (state: State) => ({
     users: Selectors.userData(state),
     nav: state.nav,
+    posts: state.posts,
   }),
   (dispatch) => ({
     fetchUsers: () => dispatch(Actions.users.fetchUsers.trigger()),
     navigate: () => {},
+    getPosts: () => {},
   })
 )(Home);
 
