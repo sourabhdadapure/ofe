@@ -15,7 +15,6 @@ export default function (state = initialState, action: any) {
     }
 
     case types.NAV_SUCCESS: {
-      console.warn("current reduce", state.currentScreen);
       return {
         ...state,
         loading: false,
